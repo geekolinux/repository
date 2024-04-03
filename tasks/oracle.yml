@@ -1,0 +1,20 @@
+- name: Add or remove repositories for Oracle
+  ansible.builtin.yum_repository:
+    name: "{{ repo_manager.name }}"
+    description: "{{ repo_manager.description }}"
+    baseurl: "{{ repo_manager.repo_url }}"
+    gpgcheck: "{{ repo_manager.gpgcheck }}"
+    gpgkey: "{{ repo_manager.gpgkey }}"
+    state: "{{ repo_manager.state }}"
+    enabled: "{{ repo_manager.enabled }}"
+  register: modify_repo_oracle
+  loop: "{{ repo_yum_manage_repositories }}"
+  loop_control:
+    loop_var: "repo_manager"
+  when: repo_yum_manage_repositories | length > 0
+
+- name: Update the repository cache to be up to date with package versions
+  ansible.builtin.dnf:
+    update_cache: true
+  when: modify_repo_oracle is changed
+

@@ -1,0 +1,20 @@
+repo_yum_manage_repositories: []
+#  - name: nginx
+#    repo_url: http://nginx.org/packages/rhel/$releasever/$basearch/
+#    description: Nginx Repo
+#    gpgcheck: true
+#    gpgkey: https://nginx.org/keys/nginx_signing.key
+#    state: absent
+#    enabled: true
+
+repo_apt_manage_repositories: []
+#  - repo: "deb http://nginx.org/packages/mainline/debian/ stretch nginx"
+#    state: absent
+#    filename: /etc/apt/sources.list.d/nginx
+
+repo_apt_add_key: []
+#  - url: "http://nginx.org/keys/nginx_signing.key"
+#    dest: "/etc/apt/trusted.gpg.d/nginx.asc"
+#    mode: "0644"
+
+repo_apt_delete_key: ""

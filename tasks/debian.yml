@@ -1,0 +1,35 @@
+- name: Add an Apt signing key for Debian based machines
+  environment:
+    http_proxy: "{{ repo_apt_proxy_url }}"
+  ansible.builtin.get_url:
+    url: "{{ repo_key.url }}"
+    dest: "{{ repo_key.dest }}"
+    mode: "{{ repo_key.mode }}"
+  loop: "{{ repo_apt_add_key }}"
+  loop_control:
+    label: "{{ repo_key.url }}"
+    loop_var: repo_key
+  when: repo_apt_add_key | length > 0
+
+- name: Delete an Apt signing key for Debian based machines
+  ansible.builtin.file:
+    path: "{{ repo_apt_delete_key }}"
+    state: absent
+  when: repo_apt_delete_key is defined
+
+- name: Add repositories Debian based machines
+  ansible.builtin.apt_repository:
+    repo: "{{ repo_apt.repo }}"
+    state: "{{ repo_apt.state }}"
+    filename: "{{ repo_apt.filename }}"
+  register: modify_repo_debian
+  loop: "{{ repo_apt_manage_repositories }}"
+  loop_control:
+    label: "{{ repo_apt.repo }}"
+    loop_var: repo_apt
+  when: repo_apt_manage_repositories | length > 0
+
+- name: Update the repository cache to be up to date with package versions
+  ansible.builtin.apt:
+    update_cache: true
+  when: modify_repo_debian is changed
