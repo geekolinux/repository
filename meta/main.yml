@@ -1,0 +1,36 @@
+galaxy_info:
+  author: geekolinux
+  description: Repository role to modify official and third-party repositories on Linux machines
+
+  license: MIT
+
+  min_ansible_version: 2.9
+
+  platforms:
+  - name: AlmaLinux
+    versions:
+      - all
+  - name: RedHat
+    versions:
+      - all
+  - name: Fedora
+    versions:
+      - all
+  - name: Ubuntu
+    versions:
+      - all
+  - name: Oracle
+    versions:
+      - all
+  - name: Debian
+    versions:
+      - all
+
+  galaxy_tags:
+    - redhat
+    - debian
+    - ubuntu
+    - oracle
+    - ansible
+
+dependencies: []
